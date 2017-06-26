@@ -128,7 +128,12 @@ def get_application_chunks(exception):
     )
 
 
-class ExceptionFeature(object):
+class Feature(object):
+    def extract(self, event):
+        raise NotImplementedError
+
+
+class ExceptionFeature(Feature):
     def __init__(self, function):
         self.function = function
 
@@ -148,7 +153,7 @@ class ExceptionFeature(object):
                 logger.exception('Could not extract characteristic(s) from exception in %r due to error: %r', event, error)
 
 
-class MessageFeature(object):
+class MessageFeature(Feature):
     def __init__(self, function):
         self.function = function
 
